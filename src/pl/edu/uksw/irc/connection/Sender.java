@@ -50,7 +50,6 @@ public class Sender implements Runnable {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				if (success != true) {
 					bus.pushOutgoingEvent(message);
 				}

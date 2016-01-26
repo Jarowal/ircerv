@@ -5,7 +5,7 @@ import java.nio.channels.Selector;
 import pl.edu.uksw.irc.connection.Accepter;
 import pl.edu.uksw.irc.connection.Receiver;
 import pl.edu.uksw.irc.connection.Sender;
-import pl.edu.uksw.irc.executor.HailMary;
+import pl.edu.uksw.irc.executor.Executor;
 import pl.edu.uksw.irc.queue.EventBus;
 
 public class Starter {
@@ -33,7 +33,7 @@ public class Starter {
 		System.out.println("Receiver started");
 		
 
-		HailMary executor = new HailMary(bus);
+		Executor executor = new Executor(bus);
 		Thread executorThread = new Thread(executor);
 		executorThread.start();
 		
