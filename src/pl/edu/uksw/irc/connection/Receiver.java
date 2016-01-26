@@ -11,7 +11,7 @@ import pl.edu.uksw.irc.dto.MessageDTO;
 import pl.edu.uksw.irc.queue.EventBus;
 
 public class Receiver implements Runnable {
-	
+
 	Selector selector;
 	EventBus bus;
 	int readFrequency;
@@ -26,59 +26,71 @@ public class Receiver implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		while (true) {
-			System.out.println("tst");
+			// System.out.println("tst");
 			try {
 
 				int howManyChannelsReady = selector.selectNow();
-				System.out.println("how many: " + howManyChannelsReady);
+				// System.out.println("how many: " + howManyChannelsReady);
 				if (howManyChannelsReady > 0) {
 
 					Iterator<SelectionKey> keyIter = selector.selectedKeys()
 							.iterator();
-					System.out.println("tst2");
+					// System.out.println("tst2");
 
 					while (keyIter.hasNext()) {
 
 						SelectionKey keyReady = keyIter.next();
 						SocketChannel readChan = (SocketChannel) keyReady
 								.channel();
+						if (!keyReady.isValid()) {
+							keyReady.cancel();
+						}
 
 						if (keyReady.isReadable()) {
 							System.out.println("Receiving stuff!");
 
 							ByteBuffer readBuf = ByteBuffer.allocate(2048);
 
-							readChan.read(readBuf);
+							int fail = readChan.read(readBuf);
 							readBuf.flip();
 							String receivedMessage = "";
-							while (readBuf.hasRemaining()) {
-								
-								// read 1 byte at a time
-								receivedMessage += (char) readBuf.get(); 
-								
+							System.out.println("fail: " + fail);
+							if (fail == -1) {
+								System.out.print("Closing connection");
+								// System.out.print(receivedMessage);
+								// keyReady.cancel();
+								readChan.close();
+								// keyIter.remove();
+								break;
 							}
+							while (readBuf.hasRemaining()) {
+
+								// read 1 byte at a time
+								receivedMessage += (char) readBuf.get();
+
+							}
+
 							String[] splittedMessage = receivedMessage
 									.split("\r\n|[\r\n]");
 							for (String singleMessage : splittedMessage) {
-								System.out.print(singleMessage);
-								System.out.println('*');
-								System.out.println("splitu");
+								System.out.println("*"+singleMessage+"*");
+								// System.out.println('*');
+								// System.out.println("splitu");
 
-								//MessageDTO message = null;
-								MessageDTO message = new MessageDTO(singleMessage,
-								keyReady);
+								// MessageDTO message = null;
+								MessageDTO message = new MessageDTO(
+										singleMessage, keyReady);
 
 								bus.pushIncomingEvent(message);
 
 							}
-						}
-						else{
+						} else {
 							howManyChannelsReady--;
 						}
 						keyIter.remove();
 					}
-				} if(howManyChannelsReady <= 0)
-				{
+				}
+				if (howManyChannelsReady <= 0) {
 					Thread.sleep(readFrequency);
 				}
 
@@ -89,7 +101,7 @@ public class Receiver implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("tstEND");
+			// System.out.println("tstEND");
 		}
 	}
 

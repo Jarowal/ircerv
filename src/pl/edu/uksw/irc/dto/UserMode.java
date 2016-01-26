@@ -7,7 +7,7 @@ package pl.edu.uksw.irc.dto;
 
 /**
  *
- * @author Anna Łukaszek-Zadrożna
+ * @author Anna Lukaszek-Zadrozna
  */
 public enum UserMode {
     I, // i - marks a users as invisible;

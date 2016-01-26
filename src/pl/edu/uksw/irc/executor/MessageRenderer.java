@@ -6,10 +6,11 @@ import pl.edu.uksw.irc.dto.MessageDTO;
  * Created by sok_pomaranczowy on 08.01.16.
  */
 public class MessageRenderer {
-    String message = "";
     
-    public String renderMessage(MessageDTO msg) {
-        
+    
+    public MessageDTO renderMessage(MessageDTO msg) {
+    	String message = "";
+    	
         if(!msg.getName().isEmpty()) {
             message = ":"+msg.getName()+" ";
            
@@ -35,7 +36,8 @@ public class MessageRenderer {
         if(!msg.getTrailingParams().isEmpty()) {
             message = message + " :"+msg.getTrailingParams();
         }
-        return message.trim();
+        msg.setUnparsedMessage(message.trim());
+        return msg;
         }
 }
 //zamienia akcje na wiadomosc

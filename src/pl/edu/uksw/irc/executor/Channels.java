@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Anna Łukaszek-Zadrożna
+ * @author Anna Lukaszek-Zadrozna
  */
 public class Channels {
     List<Channel> channels;
@@ -22,7 +22,7 @@ public class Channels {
     /**
      * 
      * @param member
-     * @param channelsToJoin Jeżeli przyszło w DTO 0 (wypisz mnie ze wszystkich channeli), to tu przekaż null
+     * @param channelsToJoin Jezeeli przyszlo w DTO 0 (wypisz mnie ze wszystkich channeli), to tu przekaz null
      */
     public void join(User member, List<Channel> channelsToJoin){
         if(channelsToJoin == null){
@@ -31,8 +31,7 @@ public class Channels {
                 for(iterator= ch.membersList.iterator(); iterator.hasNext();){
                     User u = iterator.next();       
                     if(u.userKey == member.userKey){
-                        iterator.remove();
-                        
+                        iterator.remove();                        
                     }
                 }
             }

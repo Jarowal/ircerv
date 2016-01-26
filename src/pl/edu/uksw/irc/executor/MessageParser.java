@@ -8,7 +8,7 @@ import pl.edu.uksw.irc.dto.MessageDTO;
  */
 public class MessageParser {
 
-    public MessageDTO parseMessage(MessageDTO msg) {
+    public static MessageDTO parseMessage(MessageDTO msg) {
 
         String unparsedMessage = msg.getUnparsedMessage();
 
@@ -20,6 +20,7 @@ public class MessageParser {
         //prefix
         if (unparsedMessage.startsWith(":")) {
             messageSplit = unparsedMessage.split(" ", 3);
+            
             msg.setPrefix(messageSplit[0]);
             if (msg.getPrefix().contains("!")) {
                 begin = msg.getPrefix().indexOf(":");
@@ -63,6 +64,8 @@ public class MessageParser {
                 msg.setCommand(Command.PING);
             } else if (messageSplit[1].equalsIgnoreCase("USER")) {
                 msg.setCommand(Command.USER);
+            }else if (messageSplit[0].equalsIgnoreCase("LIST")) {
+                msg.setCommand(Command.LIST);
             }
             //parametry
             for (int i = 2; i < messageSplit.length; i++) {
@@ -84,6 +87,8 @@ public class MessageParser {
                 msg.setCommand(Command.PING);
             } else if (messageSplit[0].equalsIgnoreCase("USER")) {
                 msg.setCommand(Command.USER);
+            }else if (messageSplit[0].equalsIgnoreCase("LIST")) {
+                msg.setCommand(Command.LIST);
             }
             //todo else
             for (int i = 1; i < messageSplit.length; i++) {

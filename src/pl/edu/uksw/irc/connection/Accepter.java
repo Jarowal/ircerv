@@ -47,7 +47,6 @@ public class Accepter implements Runnable {
 					SelectionKey key = socketChannel.register(selector,
 							SelectionKey.OP_READ | SelectionKey.OP_WRITE);
 					
-					
 				} else {
 					long time2 = System.currentTimeMillis();
 					if (Math.abs(time - time2) > 1000) {

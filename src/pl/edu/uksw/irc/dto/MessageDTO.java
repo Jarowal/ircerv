@@ -8,108 +8,127 @@ import java.nio.channels.SelectionKey;
  */
 public class MessageDTO {
 
-    
-    private String prefix = "";
-    private String name; //serverName lub nick
-    private String user;
-    private String host;
-    private Command command; 
-    private String params = "";
-    private String [] middleParams; //do kogo
-    private String trailingParams; //treść wiadomości
-    private String unparsedMessage;
-    SelectionKey from;
-    SelectionKey to;
+	public MessageDTO(MessageDTO msg1) {
+		prefix = msg1.prefix;
 
-    public SelectionKey getFrom() {
-        return from;
-    }
+		name = msg1.name; // serverName lub nick
+		user = msg1.user;
+		host = msg1.host;
+		command = msg1.command;
+		params = msg1.params;
+		middleParams = msg1.middleParams; // do kogo
+		trailingParams = msg1.trailingParams; // treść wiadomości
+		unparsedMessage = msg1.unparsedMessage;
+		from = msg1.from;
+		to = msg1.to;
+	}
 
-    public void setFrom(SelectionKey from) {
-        this.from = from;
-    }
+	private String prefix = "";
+	private String name; // serverName lub nick
+	private String user;
+	private String host;
+	private Command command=null;
+	private String params = "";
+	private String[] middleParams; // do kogo
+	private String trailingParams; // treść wiadomości
+	private String unparsedMessage;
+	SelectionKey from;
+	SelectionKey to;
 
-    public SelectionKey getTo() {
-        return to;
-    }
+	public SelectionKey getFrom() {
+		return from;
+	}
 
-    public void setTo(SelectionKey to) {
-        this.to = to;
-    }
+	public void setFrom(SelectionKey from) {
+		this.from = from;
+	}
 
-    public MessageDTO() {
-    }
-    
-    public MessageDTO(String unparsedMessage, SelectionKey from) {
-        this.unparsedMessage = unparsedMessage;
-        this.from = from;
-    }
-    public String getUnparsedMessage() {
-        return unparsedMessage;
-    }
-    public String getPrefix() {
-        return prefix;
-    }
+	public SelectionKey getTo() {
+		return to;
+	}
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+	public void setTo(SelectionKey to) {
+		this.to = to;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public MessageDTO() {
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public MessageDTO(String unparsedMessage, SelectionKey from) {
+		this.unparsedMessage = unparsedMessage;
+		this.from = from;
+	}
 
-    public String getUser() {
-        return user;
-    }
+	public String getUnparsedMessage() {
+		return unparsedMessage;
+	}
 
-    public void setUser(String user) {
-        this.user = user;
-    }
+	public String getPrefix() {
+		return prefix;
+	}
 
-    public String getHost() {
-        return host;
-    }
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
-    public void setHost(String host) {
-        this.host = host;
-    }
+	public void setUnparsedMessage(String unparsedMessage) {
+		this.unparsedMessage = unparsedMessage;
+	}
 
-    public Command getCommand() {
-        return command;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setCommand(Command command) {
-        this.command = command;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getParams() {
-        return params;
-    }
+	public String getUser() {
+		return user;
+	}
 
-    public void setParams(String params) {
-        this.params = params;
-    }
+	public void setUser(String user) {
+		this.user = user;
+	}
 
-    public String[] getMiddleParams() {
-        return middleParams;
-    }
+	public String getHost() {
+		return host;
+	}
 
-    public void setMiddleParams(String [] middleParams) {
-        this.middleParams = middleParams;
-    }
+	public void setHost(String host) {
+		this.host = host;
+	}
 
-    public String getTrailingParams() {
-        return trailingParams;
-    }
+	public Command getCommand() {
+		return command;
+	}
 
-    public void setTrailingParams(String trailingParams) {
-        this.trailingParams = trailingParams;
-    }
-    
-    
+	public void setCommand(Command command) {
+		this.command = command;
+	}
+
+	public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
+	public String[] getMiddleParams() {
+		return middleParams;
+	}
+
+	public void setMiddleParams(String[] middleParams) {
+		this.middleParams = middleParams;
+	}
+
+	public String getTrailingParams() {
+		return trailingParams;
+	}
+
+	public void setTrailingParams(String trailingParams) {
+		this.trailingParams = trailingParams;
+	}
+
 }

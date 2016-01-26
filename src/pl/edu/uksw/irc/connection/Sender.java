@@ -20,26 +20,30 @@ public class Sender implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
-			System.out.println("SenderLoopStart");
+			// System.out.println("SenderLoopStart");
 
 			MessageDTO message = bus.getOutgoingEvent();
 
 			if (message != null) {
-				boolean success = false;				
+				boolean success = false;
 				try {
-					//SocketChannel readChan = null;
-					SocketChannel readChan = (SocketChannel) message.getTo().channel();
-					//String reply = "tst";
-					String reply = message.getUnparsedMessage()+"\r\n";
-					ByteBuffer buf = ByteBuffer
-							.allocate(reply.getBytes().length);
-					buf.clear();
-					buf.put(reply.getBytes());
+					// SocketChannel readChan = null;
+					SocketChannel readChan = (SocketChannel) message.getTo()
+							.channel();
+					// String reply = "tst";
+					if (message.getTo().isWritable()) {
+						String reply = message.getUnparsedMessage() + "\r\n";
+						ByteBuffer buf = ByteBuffer
+								.allocate(reply.getBytes().length);
+						buf.clear();
+						buf.put(reply.getBytes());
 
-					buf.flip();
-					while (buf.hasRemaining()) {
+						buf.flip();
+						while (buf.hasRemaining()) {
 
-						readChan.write(buf);
+							readChan.write(buf);
+						}
+						
 					}
 					success = true;
 				} catch (IOException e) {
@@ -47,10 +51,10 @@ public class Sender implements Runnable {
 					e.printStackTrace();
 				}
 
-				if (success!=true){
+				if (success != true) {
 					bus.pushOutgoingEvent(message);
 				}
-			}else{
+			} else {
 				try {
 					Thread.sleep(writeFrequency);
 				} catch (InterruptedException e) {
@@ -59,7 +63,7 @@ public class Sender implements Runnable {
 				}
 			}
 
-			System.out.println("SenderLoopEnd");
+			// System.out.println("SenderLoopEnd");
 		}
 
 	}

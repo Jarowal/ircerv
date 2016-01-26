@@ -15,5 +15,7 @@ public enum Command {
     QUIT,
     PRIVMSG,
     PING,
-    USER
+    USER,
+    LIST
+    
 }
